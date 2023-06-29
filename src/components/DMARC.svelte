@@ -61,6 +61,7 @@
 <input
 	bind:value={dmarcString}
 	class="bg-neutral-50 dark:bg-neutral-900 font-mono px-3 py-2 rounded-sm mb-1"
+	spellcheck="false"
 />
 {#if error}
 	<p class="font-bold text-xs text-red-400">{error}</p>
