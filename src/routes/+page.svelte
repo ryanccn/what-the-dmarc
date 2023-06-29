@@ -3,6 +3,10 @@
 	import SPF from '../components/SPF.svelte';
 </script>
 
+<svelte:head>
+	<title>What the DMARC?</title>
+</svelte:head>
+
 <h1 class="font-extrabold">What the DMARC?</h1>
 <p class="text-neutral-600 dark:text-neutral-400 mb-12">
 	A small app to explain DMARC and SPF records.
