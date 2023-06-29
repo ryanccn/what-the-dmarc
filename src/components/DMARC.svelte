@@ -79,7 +79,9 @@
 			{/if}
 		{:else}
 			<Neutral />
-			<span class="text-neutral-500">DKIM verification not configured, defaulting to Relaxed</span>
+			<span class="text-neutral-500 dark:text-neutral-400"
+				>DKIM verification not configured, defaulting to Relaxed</span
+			>
 		{/if}
 	</li>
 
@@ -94,7 +96,9 @@
 			{/if}
 		{:else}
 			<Neutral />
-			<span class="text-neutral-500">SPF verification not configured, defaulting to Relaxed</span>
+			<span class="text-neutral-500 dark:text-neutral-400"
+				>SPF verification not configured, defaulting to Relaxed</span
+			>
 		{/if}
 	</li>
 
@@ -129,7 +133,7 @@
 			{/if}
 		{:else}
 			<Neutral />
-			<span class="text-neutral-500">
+			<span class="text-neutral-500 dark:text-neutral-400">
 				Defaulting to generate a DMARC failure report if all underlying authentication mechanisms
 				fail to produce an aligned "pass" result.
 			</span>
@@ -181,7 +185,9 @@
 			{/if}
 		{:else}
 			<Neutral />
-			<span class="text-neutral-500"> Defaulting to applying this policy to 100% of emails </span>
+			<span class="text-neutral-500 dark:text-neutral-400">
+				Defaulting to applying this policy to 100% of emails
+			</span>
 		{/if}
 	</li>
 </ul>
