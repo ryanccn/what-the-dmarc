@@ -38,14 +38,14 @@
 			return;
 		}
 
-		if (!dmarcString.startsWith('v=DMARC1')) {
-			error = 'DMARC records must start with v=DMARC1';
-			return;
-		}
-
 		const invalidPart = parts.find((pt) => !Object.keys(dmarcResult).includes(pt[0]));
 		if (invalidPart) {
 			error = `${invalidPart[0]} does not exist in DMARC records`;
+			return;
+		}
+
+		if (parts.length === 0 || parts[0][0] !== 'v' || parts[0][1] !== 'DMARC1') {
+			error = 'v=DMARC1 must be provided at the start of the record';
 			return;
 		}
 
