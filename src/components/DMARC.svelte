@@ -34,7 +34,7 @@
 			.map((s) => s.split('=').filter(Boolean));
 
 		if (parts.some((pt) => pt.length !== 2)) {
-			error = 'Invalid format in header';
+			error = 'Invalid format in record';
 			return;
 		}
 
