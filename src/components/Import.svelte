@@ -75,7 +75,7 @@
 		inProgress = true;
 
 		const spfTxts = await queryTXT(fqdn);
-		const remoteSPF = spfTxts?.find((a) => a.startsWith('v=SPF1'));
+		const remoteSPF = spfTxts?.find((a) => a.startsWith('v=spf1'));
 		$spfString = remoteSPF ?? '';
 
 		const dmarcTxts = await queryTXT(`_dmarc.${fqdn}`);
