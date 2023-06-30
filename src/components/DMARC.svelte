@@ -69,6 +69,37 @@
 
 <ul class="mt-8 flex flex-col gap-y-2 text-sm leading-tight max-w-prose">
 	<li class="flex flex-row items-center gap-x-2">
+		{#if dmarcResult.p}
+			{#if ['none', 'quarantine', 'reject'].includes(dmarcResult.p)}
+				<Good />
+				{#if dmarcResult.p === 'none'}
+					<span>
+						The Domain Owner requests no specific action be taken regarding delivery of messages.
+					</span>
+				{:else if dmarcResult.p === 'quarantine'}
+					<span>
+						The Domain Owner wishes to have email that fails the DMARC mechanism check be treated by
+						Mail Receivers as suspicious.
+					</span>
+				{:else if dmarcResult.p === 'reject'}
+					<span>
+						The Domain Owner wishes for Mail Receivers to reject email that fails the DMARC
+						mechanism check.
+					</span>
+				{/if}
+			{:else}
+				<Bad />
+				<span>Requested Mail Receiver policy {dmarcResult.p} invalid</span>
+			{/if}
+		{:else}
+			<Bad />
+			<span class="text-red-400">
+				Requested Mail Receiver policy (none, quarantine, or reject) is required.
+			</span>
+		{/if}
+	</li>
+
+	<li class="flex flex-row items-center gap-x-2">
 		{#if dmarcResult.adkim}
 			{#if ['r', 's'].includes(dmarcResult.adkim)}
 				<Good />
@@ -136,37 +167,6 @@
 			<span class="text-neutral-500 dark:text-neutral-400">
 				Defaulting to generate a DMARC failure report if all underlying authentication mechanisms
 				fail to produce an aligned "pass" result.
-			</span>
-		{/if}
-	</li>
-
-	<li class="flex flex-row items-center gap-x-2">
-		{#if dmarcResult.p}
-			{#if ['none', 'quarantine', 'reject'].includes(dmarcResult.p)}
-				<Good />
-				{#if dmarcResult.p === 'none'}
-					<span>
-						The Domain Owner requests no specific action be taken regarding delivery of messages.
-					</span>
-				{:else if dmarcResult.p === 'quarantine'}
-					<span>
-						The Domain Owner wishes to have email that fails the DMARC mechanism check be treated by
-						Mail Receivers as suspicious.
-					</span>
-				{:else if dmarcResult.p === 'reject'}
-					<span>
-						The Domain Owner wishes for Mail Receivers to reject email that fails the DMARC
-						mechanism check.
-					</span>
-				{/if}
-			{:else}
-				<Bad />
-				<span>Requested Mail Receiver policy {dmarcResult.p} invalid</span>
-			{/if}
-		{:else}
-			<Bad />
-			<span class="text-red-400">
-				Requested Mail Receiver policy (none, quarantine, or reject) is required.
 			</span>
 		{/if}
 	</li>
