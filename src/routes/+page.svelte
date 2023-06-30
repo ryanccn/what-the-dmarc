@@ -3,6 +3,7 @@
 
 	import DMARC from '../components/DMARC.svelte';
 	import SPF from '../components/SPF.svelte';
+	import Import from '../components/Import.svelte';
 </script>
 
 <svelte:head>
@@ -21,7 +22,10 @@
 	<ArrowUpRightIcon class="block w-3 h-3" />
 </a>
 
-<h2 class="font-semibold mb-2">DMARC</h2>
+<h2 class="font-semibold mb-2">Import records from domain</h2>
+<Import />
+
+<h2 class="mt-12 font-semibold mb-2">DMARC</h2>
 <DMARC />
 
 <h2 class="mt-12 font-semibold mb-2">SPF</h2>

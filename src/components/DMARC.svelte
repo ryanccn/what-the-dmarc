@@ -3,6 +3,8 @@
 	import Bad from './icons/Bad.svelte';
 	import Neutral from './icons/Neutral.svelte';
 
+	import { dmarcString } from '../store';
+
 	const initialDmarcState = {
 		adkim: '',
 		aspf: '',
@@ -17,18 +19,16 @@
 		v: ''
 	} as { [key: string]: string };
 
-	let dmarcString = '';
-
 	let error: string | null = null;
 	let dmarcResult = initialDmarcState;
 
 	$: (() => {
-		if (dmarcString.length === 0) {
+		if ($dmarcString.length === 0) {
 			error = null;
 			return;
 		}
 
-		const parts = dmarcString
+		const parts = $dmarcString
 			.split(/ *; */)
 			.filter(Boolean)
 			.map((s) => s.split('=').filter(Boolean));
@@ -59,7 +59,7 @@
 </script>
 
 <input
-	bind:value={dmarcString}
+	bind:value={$dmarcString}
 	class="bg-neutral-50 dark:bg-neutral-900 font-mono px-3 py-2 rounded-sm mb-1"
 	spellcheck="false"
 />

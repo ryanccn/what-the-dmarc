@@ -2,4 +2,4 @@
 	import { CheckCircleIcon } from 'lucide-svelte';
 </script>
 
-<CheckCircleIcon class="block w-5 h-5 text-green-500 shrink-0" />
+<CheckCircleIcon class="block w-5 h-5 text-green-500 dark:text-green-400 shrink-0" />
