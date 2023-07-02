@@ -60,7 +60,7 @@
 
 <input
 	bind:value={$dmarcString}
-	class="bg-neutral-50 dark:bg-neutral-900 font-mono px-3 py-2 rounded-sm mb-1"
+	class="bg-neutral-50 dark:bg-neutral-900 font-mono px-3 py-2 rounded-sm mb-1 focus:outline-none focus:ring focus:ring-pink-500/50 transition-all"
 	spellcheck="false"
 />
 {#if error}

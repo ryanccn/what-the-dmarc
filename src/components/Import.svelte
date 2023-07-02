@@ -89,12 +89,12 @@
 <div class="flex flex-row gap-x-2">
 	<input
 		bind:value={fqdn}
-		class="bg-neutral-50 dark:bg-neutral-900 text-sm font-mono px-3 py-2 grow rounded-sm disabled:opacity-75 transition-opacity"
+		class="bg-neutral-50 dark:bg-neutral-900 text-sm font-mono px-3 py-2 grow rounded-sm disabled:opacity-75 transition-all focus:outline-none focus:ring focus:ring-pink-500/50"
 		spellcheck="false"
 		disabled={inProgress}
 	/>
 	<button
-		class="font-medium text-sm px-3 py-2 rounded-sm bg-blue-500 text-white disabled:opacity-75 transition-opacity"
+		class="font-medium text-sm px-3 py-2 rounded-sm bg-pink-500 text-white disabled:opacity-75 transition-all focus:outline-none focus:ring focus:ring-pink-500/50"
 		on:click={doImport}
 		disabled={inProgress}
 	>
