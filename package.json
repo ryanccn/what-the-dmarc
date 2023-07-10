@@ -35,6 +35,6 @@
 	"type": "module",
 	"packageManager": "pnpm@8.6.5",
 	"dependencies": {
-		"lucide-svelte": "^0.256.0"
+		"lucide-svelte": "^0.259.0"
 	}
 }
