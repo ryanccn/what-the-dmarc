@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   lucide-svelte:
-    specifier: ^0.261.0
-    version: 0.261.0(svelte@4.0.5)
+    specifier: ^0.263.0
+    version: 0.263.0(svelte@4.0.5)
 
 devDependencies:
   '@microsoft/eslint-formatter-sarif':
@@ -1406,8 +1406,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /lucide-svelte@0.261.0(svelte@4.0.5):
-    resolution: {integrity: sha512-bDJQXDdNj8lP88e0+c3/XOAc1TYQPvjPsXVN5viYvgO2qWHkyzIi3lcwojQ4a85RL9XawSWRfL4mK95zgQMfQg==}
+  /lucide-svelte@0.263.0(svelte@4.0.5):
+    resolution: {integrity: sha512-1cB+DPsX7PbHJ+aDbc2nKKRdv3DYHK81mRVUw7kNb7bVw2Dh9QsNVON918WjnSlmXEt9lUnJ7TkNymreZwnLgg==}
     peerDependencies:
       svelte: '>=3 <5'
     dependencies:
