@@ -2,4 +2,4 @@
 	import { XCircleIcon } from 'lucide-svelte';
 </script>
 
-<XCircleIcon class="block w-5 h-5 text-red-400 shrink-0" />
+<XCircleIcon class="block h-5 w-5 shrink-0 text-red-400" />

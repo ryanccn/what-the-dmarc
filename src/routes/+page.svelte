@@ -11,22 +11,22 @@
 </svelte:head>
 
 <h1 class="font-extrabold">What the DMARC?</h1>
-<p class="text-neutral-700 dark:text-neutral-300 mb-2">
+<p class="mb-2 text-neutral-700 dark:text-neutral-300">
 	A small app to explain DMARC and SPF records.
 </p>
 <a
-	class="flex flex-row items-center gap-x-1 font-medium text-sm w-auto text-neutral-700 hover:text-neutral-600 dark:text-neutral-300 dark:hover:text-neutral-200 transition-colors mb-12"
+	class="mb-12 flex w-auto flex-row items-center gap-x-1 text-sm font-medium text-neutral-700 transition-colors hover:text-neutral-600 dark:text-neutral-300 dark:hover:text-neutral-200"
 	href="https://ryanccn.dev/"
 >
 	<span>By Ryan Cao</span>
-	<ArrowUpRightIcon class="block w-3 h-3" />
+	<ArrowUpRightIcon class="block h-3 w-3" />
 </a>
 
-<h2 class="font-semibold mb-2">Import records from domain</h2>
+<h2 class="mb-2 font-semibold">Import records from domain</h2>
 <Import />
 
-<h2 class="mt-12 font-semibold mb-2">DMARC</h2>
+<h2 class="mb-2 mt-12 font-semibold">DMARC</h2>
 <DMARC />
 
-<h2 class="mt-12 font-semibold mb-2">SPF</h2>
+<h2 class="mb-2 mt-12 font-semibold">SPF</h2>
 <SPF />

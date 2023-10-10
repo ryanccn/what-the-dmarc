@@ -60,14 +60,14 @@
 
 <input
 	bind:value={$dmarcString}
-	class="bg-neutral-50 dark:bg-neutral-900 font-mono px-3 py-2 rounded-sm mb-1 focus:outline-none focus:ring focus:ring-pink-500/50 transition-all"
+	class="mb-1 rounded-sm bg-neutral-50 px-3 py-2 font-mono transition-all focus:outline-none focus:ring focus:ring-pink-500/50 dark:bg-neutral-900"
 	spellcheck="false"
 />
 {#if error}
-	<p class="font-bold text-xs text-red-400">{error}</p>
+	<p class="text-xs font-bold text-red-400">{error}</p>
 {/if}
 
-<ul class="mt-8 flex flex-col gap-y-2 text-sm leading-tight max-w-prose">
+<ul class="mt-8 flex max-w-prose flex-col gap-y-2 text-sm leading-tight">
 	<li class="flex flex-row items-center gap-x-2">
 		{#if dmarcResult.p}
 			{#if ['none', 'quarantine', 'reject'].includes(dmarcResult.p)}

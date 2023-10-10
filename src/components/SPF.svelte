@@ -70,14 +70,14 @@
 
 <input
 	bind:value={$spfString}
-	class="bg-neutral-50 dark:bg-neutral-900 font-mono px-3 py-2 rounded-sm mb-1 focus:outline-none focus:ring focus:ring-pink-500/50 transition-all"
+	class="mb-1 rounded-sm bg-neutral-50 px-3 py-2 font-mono transition-all focus:outline-none focus:ring focus:ring-pink-500/50 dark:bg-neutral-900"
 	spellcheck="false"
 />
 {#if error}
-	<p class="font-bold text-xs text-red-400">{error}</p>
+	<p class="text-xs font-bold text-red-400">{error}</p>
 {/if}
 
-<ul class="mt-8 flex flex-col gap-y-2 text-sm leading-tight max-w-prose mb-4">
+<ul class="mb-4 mt-8 flex max-w-prose flex-col gap-y-2 text-sm leading-tight">
 	{#each spfState as spfPolicy}
 		{#if spfPolicy.policy === SPFPolicy.PASS}
 			<li class="flex flex-row items-center gap-x-2">
@@ -104,8 +104,8 @@
 </ul>
 
 {#if includeState.length > 0}
-	<h3 class="font-medium mb-2">Included domains</h3>
-	<ul class="flex flex-col gap-y-2 text-sm leading-tight max-w-prose">
+	<h3 class="mb-2 font-medium">Included domains</h3>
+	<ul class="flex max-w-prose flex-col gap-y-2 text-sm leading-tight">
 		{#each includeState as spfPolicy}
 			<li class="flex flex-row items-center gap-x-2">
 				<Good />
