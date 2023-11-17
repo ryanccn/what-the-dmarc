@@ -2,6 +2,6 @@
 	import '../app.postcss';
 </script>
 
-<main class="px-6 py-24 max-w-[80ch] mx-auto flex flex-col">
+<main class="mx-auto flex max-w-[80ch] flex-col px-6 py-24">
 	<slot />
 </main>

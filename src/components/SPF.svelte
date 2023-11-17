@@ -50,12 +50,12 @@
 					frag[0] === '+'
 						? SPFPolicy.PASS
 						: frag[0] === '-'
-						? SPFPolicy.FAIL
-						: frag[0] === '~'
-						? SPFPolicy.SOFTFAIL
-						: frag[0] === '?'
-						? SPFPolicy.NEUTRAL
-						: SPFPolicy.PASS;
+						  ? SPFPolicy.FAIL
+						  : frag[0] === '~'
+						    ? SPFPolicy.SOFTFAIL
+						    : frag[0] === '?'
+						      ? SPFPolicy.NEUTRAL
+						      : SPFPolicy.PASS;
 
 				newState.push({
 					server: ['+', '-', '~', '?'].includes(frag[0]) ? frag.slice(1) : frag,
