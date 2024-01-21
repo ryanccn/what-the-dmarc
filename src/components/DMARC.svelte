@@ -28,7 +28,17 @@
 			return;
 		}
 
-		const parts = $dmarcString
+		let cleanDMARCString = $dmarcString;
+
+		if (cleanDMARCString.startsWith('"') && cleanDMARCString.endsWith('"')) {
+			cleanDMARCString = cleanDMARCString.slice(1, -1);
+		}
+
+		if (cleanDMARCString.startsWith("'") && cleanDMARCString.endsWith("'")) {
+			cleanDMARCString = cleanDMARCString.slice(1, -1);
+		}
+
+		const parts = cleanDMARCString
 			.split(/ *; */)
 			.filter(Boolean)
 			.map((s) => s.split('=').filter(Boolean));
@@ -53,6 +63,7 @@
 		for (const pair of parts) {
 			newResults[pair[0]] = pair[1];
 		}
+
 		dmarcResult = { ...initialDmarcState, ...newResults };
 		error = null;
 	})();
@@ -63,6 +74,7 @@
 	class="mb-1 rounded-sm bg-neutral-50 px-3 py-2 font-mono transition-all focus:outline-none focus:ring focus:ring-pink-500/50 dark:bg-neutral-900"
 	spellcheck="false"
 />
+
 {#if error}
 	<p class="text-xs font-bold text-red-400">{error}</p>
 {/if}

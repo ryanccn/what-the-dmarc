@@ -26,7 +26,17 @@
 			return;
 		}
 
-		if (!$spfString.startsWith('v=spf1 ')) {
+		let cleanSPFString = $spfString;
+
+		if (cleanSPFString.startsWith('"') && cleanSPFString.endsWith('"')) {
+			cleanSPFString = cleanSPFString.slice(1, -1);
+		}
+
+		if (cleanSPFString.startsWith("'") && cleanSPFString.endsWith("'")) {
+			cleanSPFString = cleanSPFString.slice(1, -1);
+		}
+
+		if (!cleanSPFString.startsWith('v=spf1 ')) {
 			error = 'SPF record must start with v=spf1';
 			spfState = initialSPFState;
 			return;
@@ -34,7 +44,7 @@
 
 		const newState = [] as typeof initialSPFState;
 
-		$spfString
+		cleanSPFString
 			.split(' ')
 			.filter(Boolean)
 			.slice(1)
@@ -50,12 +60,12 @@
 					frag[0] === '+'
 						? SPFPolicy.PASS
 						: frag[0] === '-'
-						  ? SPFPolicy.FAIL
-						  : frag[0] === '~'
-						    ? SPFPolicy.SOFTFAIL
-						    : frag[0] === '?'
-						      ? SPFPolicy.NEUTRAL
-						      : SPFPolicy.PASS;
+							? SPFPolicy.FAIL
+							: frag[0] === '~'
+								? SPFPolicy.SOFTFAIL
+								: frag[0] === '?'
+									? SPFPolicy.NEUTRAL
+									: SPFPolicy.PASS;
 
 				newState.push({
 					server: ['+', '-', '~', '?'].includes(frag[0]) ? frag.slice(1) : frag,
@@ -73,6 +83,7 @@
 	class="mb-1 rounded-sm bg-neutral-50 px-3 py-2 font-mono transition-all focus:outline-none focus:ring focus:ring-pink-500/50 dark:bg-neutral-900"
 	spellcheck="false"
 />
+
 {#if error}
 	<p class="text-xs font-bold text-red-400">{error}</p>
 {/if}
