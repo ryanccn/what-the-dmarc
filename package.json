@@ -12,7 +12,7 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
-		"lucide-svelte": "^0.312.0"
+		"lucide-svelte": "^0.314.0"
 	},
 	"devDependencies": {
 		"@microsoft/eslint-formatter-sarif": "^3.0.0",
