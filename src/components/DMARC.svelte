@@ -71,7 +71,7 @@
 
 <input
 	bind:value={$dmarcString}
-	class="mb-1 rounded-sm bg-neutral-50 px-3 py-2 font-mono transition-all focus:outline-none focus:ring focus:ring-pink-500/50 dark:bg-neutral-900"
+	class="mb-1 w-full rounded bg-neutral-50 px-3 py-2 font-mono text-sm dark:bg-neutral-900"
 	spellcheck="false"
 />
 

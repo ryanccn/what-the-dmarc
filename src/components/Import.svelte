@@ -71,30 +71,48 @@
 		return data.Answer.map((k) => k.data.substring(1, k.data.length - 1));
 	};
 
-	const doImport = async () => {
-		inProgress = true;
-
+	const doImportSPF = async () => {
 		const spfTxts = await queryTXT(fqdn);
 		const remoteSPF = spfTxts?.find((a) => a.includes('v=spf1'));
 		$spfString = remoteSPF ?? '';
+	};
 
+	const doImportDMARC = async () => {
 		const dmarcTxts = await queryTXT(`_dmarc.${fqdn}`);
 		const remoteDMARC = dmarcTxts?.find((a) => a.includes('v=DMARC1'));
 		$dmarcString = remoteDMARC ?? '';
+	};
+
+	const doImport = async () => {
+		inProgress = true;
+
+		try {
+			await Promise.all([doImportDMARC(), doImportSPF()]);
+		} catch (error) {
+			window.alert(error);
+		}
 
 		inProgress = false;
+	};
+
+	const handleKey = (ev: KeyboardEvent) => {
+		if (ev.metaKey && ev.key === 'Enter')
+			doImport().catch((error) => {
+				console.error(error);
+			});
 	};
 </script>
 
 <div class="flex flex-row gap-x-2">
 	<input
 		bind:value={fqdn}
-		class="grow rounded-sm bg-neutral-50 px-3 py-2 font-mono text-sm transition-all focus:outline-none focus:ring focus:ring-pink-500/50 disabled:opacity-75 dark:bg-neutral-900"
+		on:keydown={handleKey}
+		class="grow rounded bg-neutral-50 px-3 py-2 font-mono text-sm transition-opacity disabled:opacity-75 dark:bg-neutral-900"
 		spellcheck="false"
 		disabled={inProgress}
 	/>
 	<button
-		class="rounded-sm bg-pink-500 px-3 py-2 text-sm font-medium text-white transition-all focus:outline-none focus:ring focus:ring-pink-500/50 disabled:opacity-75"
+		class="rounded bg-pink-500 px-3 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-75"
 		on:click={doImport}
 		disabled={inProgress}
 	>

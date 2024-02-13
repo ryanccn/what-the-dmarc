@@ -10,8 +10,8 @@
 	<title>What the DMARC?</title>
 </svelte:head>
 
-<h1 class="font-extrabold">What the DMARC?</h1>
-<p class="mb-2 text-neutral-700 dark:text-neutral-300">
+<h1 class="mb-1 text-lg font-extrabold tracking-tight">What the DMARC?</h1>
+<p class="mb-4 text-neutral-700 dark:text-neutral-300">
 	A small app to explain DMARC and SPF records.
 </p>
 <a
@@ -22,11 +22,19 @@
 	<ArrowUpRightIcon class="block h-3 w-3" />
 </a>
 
-<h2 class="mb-2 font-semibold">Import records from domain</h2>
-<Import />
+<section>
+	<h2 class="mb-2 font-semibold tracking-tight">Import records from domain</h2>
+	<Import />
+</section>
 
-<h2 class="mb-2 mt-12 font-semibold">DMARC</h2>
-<DMARC />
+<div class="mt-12 flex flex-col gap-8 md:flex-row">
+	<section class="md:w-1/2">
+		<h2 class="mb-2 font-semibold tracking-tight">DMARC</h2>
+		<DMARC />
+	</section>
 
-<h2 class="mb-2 mt-12 font-semibold">SPF</h2>
-<SPF />
+	<section class="md:w-1/2">
+		<h2 class="mb-2 font-semibold tracking-tight">SPF</h2>
+		<SPF />
+	</section>
+</div>
