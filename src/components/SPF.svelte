@@ -3,30 +3,23 @@
 	import Bad from './icons/Bad.svelte';
 	import Neutral from './icons/Neutral.svelte';
 
-	import { spfString } from '../store';
+	import { store } from '../store.svelte';
 
-	const enum SPFPolicy {
-		PASS,
-		FAIL,
-		SOFTFAIL,
-		NEUTRAL,
-		INCLUDE
-	}
-	const initialSPFState = [] as { server: string; policy: SPFPolicy }[];
+	type SPFPolicy = 'pass' | 'fail' | 'softfail' | 'neutral' | 'include';
 
-	let error: string | null = null;
-	let spfState = initialSPFState;
+	let error = $state<string | null>(null);
 
-	$: includeState = spfState.filter((k) => k.policy === SPFPolicy.INCLUDE);
+	let spfState = $state<{ server: string; policy: SPFPolicy }[]>([]);
+	let includeState = $derived(spfState.filter((k) => k.policy === 'include'));
 
-	$: (() => {
-		if ($spfString.length === 0) {
+	$effect(() => {
+		if (store.spf.length === 0) {
 			error = null;
-			spfState = initialSPFState;
+			spfState = [];
 			return;
 		}
 
-		let cleanSPFString = $spfString;
+		let cleanSPFString = store.spf;
 
 		if (cleanSPFString.startsWith('"') && cleanSPFString.endsWith('"')) {
 			cleanSPFString = cleanSPFString.slice(1, -1);
@@ -38,74 +31,70 @@
 
 		if (!cleanSPFString.startsWith('v=spf1 ')) {
 			error = 'SPF record must start with v=spf1';
-			spfState = initialSPFState;
+			spfState = [];
 			return;
 		}
 
-		const newState = [] as typeof initialSPFState;
+		const newState = [] as typeof spfState;
 
-		cleanSPFString
-			.split(' ')
-			.filter(Boolean)
-			.slice(1)
-			.forEach((frag) => {
-				if (frag.startsWith('redirect=') || frag.startsWith('explanation=')) return;
+		for (const frag of cleanSPFString.split(' ').filter(Boolean).slice(1)) {
+			if (frag.startsWith('redirect=') || frag.startsWith('explanation=')) continue;
 
-				if (frag.startsWith('include:')) {
-					newState.push({ server: frag.replace('include:', ''), policy: SPFPolicy.INCLUDE });
-					return;
-				}
+			if (frag.startsWith('include:')) {
+				newState.push({ server: frag.replace('include:', ''), policy: 'include' });
+				continue;
+			}
 
-				const policy =
-					frag[0] === '+'
-						? SPFPolicy.PASS
-						: frag[0] === '-'
-							? SPFPolicy.FAIL
-							: frag[0] === '~'
-								? SPFPolicy.SOFTFAIL
-								: frag[0] === '?'
-									? SPFPolicy.NEUTRAL
-									: SPFPolicy.PASS;
+			const policy =
+				frag[0] === '+'
+					? 'pass'
+					: frag[0] === '-'
+						? 'fail'
+						: frag[0] === '~'
+							? 'softfail'
+							: frag[0] === '?'
+								? 'neutral'
+								: 'pass';
 
-				newState.push({
-					server: ['+', '-', '~', '?'].includes(frag[0]) ? frag.slice(1) : frag,
-					policy
-				});
+			newState.push({
+				server: ['+', '-', '~', '?'].includes(frag[0]) ? frag.slice(1) : frag,
+				policy
 			});
+		}
 
 		spfState = newState;
 		error = null;
-	})();
+	});
 </script>
 
 <input
-	bind:value={$spfString}
+	bind:value={store.spf}
 	class="mb-1 w-full rounded bg-neutral-50 px-3 py-2 font-mono text-sm dark:bg-neutral-900"
 	spellcheck="false"
 />
 
 {#if error}
-	<p class="text-xs font-bold text-red-400">{error}</p>
+	<p class="text-xs font-bold text-red-500">{error}</p>
 {/if}
 
 <ul class="mb-4 mt-8 flex max-w-prose flex-col gap-y-2 text-sm leading-tight">
 	{#each spfState as spfPolicy}
-		{#if spfPolicy.policy === SPFPolicy.PASS}
+		{#if spfPolicy.policy === 'pass'}
 			<li class="flex flex-row items-center gap-x-2">
 				<Good />
 				<span>{spfPolicy.server} passes checks</span>
 			</li>
-		{:else if spfPolicy.policy === SPFPolicy.FAIL}
+		{:else if spfPolicy.policy === 'fail'}
 			<li class="flex flex-row items-center gap-x-2">
 				<Bad />
 				<span>{spfPolicy.server} results in a failure</span>
 			</li>
-		{:else if spfPolicy.policy === SPFPolicy.NEUTRAL}
+		{:else if spfPolicy.policy === 'neutral'}
 			<li class="flex flex-row items-center gap-x-2">
 				<Neutral />
 				<span>{spfPolicy.server} results in a neutral status</span>
 			</li>
-		{:else if spfPolicy.policy === SPFPolicy.SOFTFAIL}
+		{:else if spfPolicy.policy === 'softfail'}
 			<li class="flex flex-row items-center gap-x-2">
 				<Bad />
 				<span>{spfPolicy.server} results in a softfail</span>

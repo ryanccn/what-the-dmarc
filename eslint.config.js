@@ -1,49 +1,25 @@
-import js from '@eslint/js';
-import ts from 'typescript-eslint';
-import svelte from 'eslint-plugin-svelte';
-import svelteParser from 'svelte-eslint-parser';
-
+import { config } from '@ryanccn/eslint-config';
 import globals from 'globals';
 
-export default ts.config(
-	js.configs.recommended,
-	...ts.configs.recommendedTypeChecked,
-
-	{
-		ignores: ['.svelte-kit/**', '.vercel/**']
-	},
-
-	{
-		languageOptions: {
-			parserOptions: {
-				project: true,
-				extraFileExtensions: ['.svelte']
-			},
-			globals: {
-				...globals.browser,
-				...globals.node
-			}
-		}
-	},
-
-	{
-		files: ['**/*.svelte'],
-		plugins: {
-			svelte
-		},
-		languageOptions: {
-			parser: svelteParser,
-			parserOptions: {
-				parser: ts.parser
+export default config({
+	ignores: ['**/.svelte-kit'],
+	svelte: true,
+	extraConfigs: [
+		{
+			files: ['**/*.svelte'],
+			languageOptions: {
+				globals: {
+					...globals.browser
+				}
 			}
 		},
-		rules: {
-			...svelte.configs.recommended.rules
+		{
+			files: ['postcss.config.cjs'],
+			languageOptions: {
+				globals: {
+					...globals.node
+				}
+			}
 		}
-	},
-
-	{
-		files: ['**/*.{js,mjs,cjs}'],
-		...ts.configs.disableTypeChecked
-	}
-);
+	]
+});

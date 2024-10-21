@@ -3,7 +3,7 @@
 	import Bad from './icons/Bad.svelte';
 	import Neutral from './icons/Neutral.svelte';
 
-	import { dmarcString } from '../store';
+	import { store } from '../store.svelte';
 
 	const initialDmarcState = {
 		adkim: '',
@@ -17,18 +17,19 @@
 		ruf: '',
 		sp: '',
 		v: ''
-	} as { [key: string]: string };
+	};
 
-	let error: string | null = null;
-	let dmarcResult = initialDmarcState;
+	let error = $state<string | null>(null);
+	let dmarcResult = $state<Record<string, string>>({ ...initialDmarcState });
 
-	$: (() => {
-		if ($dmarcString.length === 0) {
+	$effect(() => {
+		if (store.dmarc.length === 0) {
+			dmarcResult = { ...initialDmarcState };
 			error = null;
 			return;
 		}
 
-		let cleanDMARCString = $dmarcString;
+		let cleanDMARCString = store.dmarc;
 
 		if (cleanDMARCString.startsWith('"') && cleanDMARCString.endsWith('"')) {
 			cleanDMARCString = cleanDMARCString.slice(1, -1);
@@ -48,7 +49,7 @@
 			return;
 		}
 
-		const invalidPart = parts.find((pt) => !Object.keys(dmarcResult).includes(pt[0]));
+		const invalidPart = parts.find((pt) => !Object.keys(initialDmarcState).includes(pt[0]));
 		if (invalidPart) {
 			error = `${invalidPart[0]} does not exist in DMARC records`;
 			return;
@@ -59,24 +60,24 @@
 			return;
 		}
 
-		let newResults: typeof dmarcResult = {};
+		let newResults: Record<string, string> = {};
 		for (const pair of parts) {
 			newResults[pair[0]] = pair[1];
 		}
 
 		dmarcResult = { ...initialDmarcState, ...newResults };
 		error = null;
-	})();
+	});
 </script>
 
 <input
-	bind:value={$dmarcString}
+	bind:value={store.dmarc}
 	class="mb-1 w-full rounded bg-neutral-50 px-3 py-2 font-mono text-sm dark:bg-neutral-900"
 	spellcheck="false"
 />
 
 {#if error}
-	<p class="text-xs font-bold text-red-400">{error}</p>
+	<p class="text-xs font-bold text-red-500">{error}</p>
 {/if}
 
 <ul class="mt-8 flex max-w-prose flex-col gap-y-2 text-sm leading-tight">
@@ -105,7 +106,7 @@
 			{/if}
 		{:else}
 			<Bad />
-			<span class="text-red-400">
+			<span class="text-red-500">
 				Requested Mail Receiver policy (none, quarantine, or reject) is required.
 			</span>
 		{/if}
@@ -185,7 +186,7 @@
 
 	<li class="flex flex-row items-center gap-x-2">
 		{#if dmarcResult.pct}
-			{#if /^\d+$/.test(dmarcResult.pct) && 0 <= parseInt(dmarcResult.pct) && parseInt(dmarcResult.pct) <= 100}
+			{#if /^\d+$/.test(dmarcResult.pct) && 0 <= Number.parseInt(dmarcResult.pct) && Number.parseInt(dmarcResult.pct) <= 100}
 				<Good />
 				<span>
 					{dmarcResult.pct}% of messages from the Domain Owner's mail stream will have the DMARC

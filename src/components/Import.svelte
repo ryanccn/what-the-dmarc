@@ -1,20 +1,8 @@
 <script lang="ts">
-	import { dmarcString, spfString } from '../store';
+	import { store } from '../store.svelte';
 
-	let fqdn = '';
-	let inProgress = false;
-
-	const enum DNSRecordType {
-		A = 1,
-		NS = 2,
-		CNAME = 5,
-		SOA = 6,
-		MX = 15,
-		TXT = 16,
-		AAAA = 28,
-		SRV = 33,
-		DOA = 259
-	}
+	let fqdn = $state('');
+	let inProgress = $state(false);
 
 	interface DOHResponse {
 		/** The Response Code of the DNS internalQuery. These are defined here: https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-6. */
@@ -35,14 +23,14 @@
 			/** The record name requested. */
 			name: string;
 			/** The type of DNS record requested. These are defined here: https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4. */
-			type: DNSRecordType;
+			type: number;
 		}[];
 
 		Answer?: {
 			/** The record owner. */
 			name: string;
 			/** The type of DNS record. These are defined here: https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-4. */
-			type: DNSRecordType;
+			type: number;
 			/** The number of seconds the answer can be stored in cache before it is considered stale. */
 			TTL: number;
 			/** The value of the DNS record for the given name and type. The data will be in text for standardized record types and in hex for unknown types. */
@@ -58,7 +46,7 @@
 	}
 
 	const queryTXT = async (name: string) => {
-		const fetchUrl = new URL('https://1.1.1.1/dns-query');
+		const fetchUrl = new URL('https://cloudflare-dns.com/dns-query');
 		fetchUrl.searchParams.set('name', name);
 		fetchUrl.searchParams.set('type', 'TXT');
 
@@ -68,19 +56,19 @@
 		if ('error' in data) return null;
 		if (!data.Answer) return null;
 
-		return data.Answer.map((k) => k.data.substring(1, k.data.length - 1));
+		return data.Answer.map((k) => k.data.slice(1, -1));
 	};
 
 	const doImportSPF = async () => {
 		const spfTxts = await queryTXT(fqdn);
 		const remoteSPF = spfTxts?.find((a) => a.includes('v=spf1'));
-		$spfString = remoteSPF ?? '';
+		store.spf = remoteSPF ?? '';
 	};
 
 	const doImportDMARC = async () => {
 		const dmarcTxts = await queryTXT(`_dmarc.${fqdn}`);
 		const remoteDMARC = dmarcTxts?.find((a) => a.includes('v=DMARC1'));
-		$dmarcString = remoteDMARC ?? '';
+		store.dmarc = remoteDMARC ?? '';
 	};
 
 	const doImport = async () => {
@@ -89,7 +77,7 @@
 		try {
 			await Promise.all([doImportDMARC(), doImportSPF()]);
 		} catch (error) {
-			window.alert(error);
+			globalThis.alert(error);
 		}
 
 		inProgress = false;
@@ -103,19 +91,28 @@
 	};
 </script>
 
-<div class="flex flex-row gap-x-2">
+<form
+	class="flex flex-row gap-x-2"
+	onsubmit={(ev) => {
+		ev.preventDefault();
+		doImport().catch((error) => {
+			console.error(error);
+		});
+	}}
+>
 	<input
+		name="fqdn"
 		bind:value={fqdn}
-		on:keydown={handleKey}
+		onkeydown={handleKey}
 		class="grow rounded bg-neutral-50 px-3 py-2 font-mono text-sm transition-opacity disabled:opacity-75 dark:bg-neutral-900"
 		spellcheck="false"
 		disabled={inProgress}
 	/>
 	<button
 		class="rounded bg-pink-500 px-3 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-75"
-		on:click={doImport}
+		type="submit"
 		disabled={inProgress}
 	>
 		Import
 	</button>
-</div>
+</form>
