@@ -4,13 +4,13 @@
 	import Neutral from './icons/Neutral.svelte';
 
 	import { store } from '../store.svelte';
+	import { import_ } from '../import.svelte';
 
 	type SPFPolicy = 'pass' | 'fail' | 'softfail' | 'neutral' | 'include';
 
 	let error = $state<string | null>(null);
 
-	let spfState = $state<{ server: string; policy: SPFPolicy }[]>([]);
-	let includeState = $derived(spfState.filter((k) => k.policy === 'include'));
+	let spfState = $state<{ server: string; include: boolean; policy: SPFPolicy }[]>([]);
 
 	$effect(() => {
 		if (store.spf.length === 0) {
@@ -40,24 +40,20 @@
 		for (const frag of cleanSPFString.split(' ').filter(Boolean).slice(1)) {
 			if (frag.startsWith('redirect=') || frag.startsWith('explanation=')) continue;
 
-			if (frag.startsWith('include:')) {
-				newState.push({ server: frag.replace('include:', ''), policy: 'include' });
-				continue;
-			}
-
-			const policy =
+			const [policy, rest]: [SPFPolicy, string] =
 				frag[0] === '+'
-					? 'pass'
+					? ['pass', frag.slice(1)]
 					: frag[0] === '-'
-						? 'fail'
+						? ['fail', frag.slice(1)]
 						: frag[0] === '~'
-							? 'softfail'
+							? ['softfail', frag.slice(1)]
 							: frag[0] === '?'
-								? 'neutral'
-								: 'pass';
+								? ['neutral', frag.slice(1)]
+								: ['pass', frag];
 
 			newState.push({
-				server: ['+', '-', '~', '?'].includes(frag[0]) ? frag.slice(1) : frag,
+				server: rest.replace(/^include:/, ''),
+				include: rest.startsWith('include:'),
 				policy
 			});
 		}
@@ -70,47 +66,58 @@
 <input
 	bind:value={store.spf}
 	class="mb-1 w-full rounded bg-neutral-50 px-3 py-2 font-mono text-sm dark:bg-neutral-900"
+	aria-label="SPF record"
 	spellcheck="false"
+	autocomplete="off"
 />
 
 {#if error}
-	<p class="text-xs font-bold text-red-500">{error}</p>
+	<p class="mt-1 text-xs font-medium text-red-500 dark:text-red-400">{error}</p>
 {/if}
 
-<ul class="mb-4 mt-8 flex max-w-prose flex-col gap-y-2 text-sm leading-tight">
-	{#each spfState as spfPolicy}
-		{#if spfPolicy.policy === 'pass'}
-			<li class="flex flex-row items-center gap-x-2">
+<ul
+	class="mt-8 mb-4 flex max-w-prose flex-col gap-y-2.5 text-sm leading-tight text-neutral-700 dark:text-neutral-300"
+>
+	{#each spfState as spfPolicy, idx (idx)}
+		<li class="flex flex-row items-center gap-x-2">
+			{#if spfPolicy.policy === 'pass'}
 				<Good />
-				<span>{spfPolicy.server} passes checks</span>
-			</li>
-		{:else if spfPolicy.policy === 'fail'}
-			<li class="flex flex-row items-center gap-x-2">
+				<span
+					><span class="font-semibold text-black dark:text-white">{spfPolicy.server}</span> passes checks</span
+				>
+			{:else if spfPolicy.policy === 'fail'}
 				<Bad />
-				<span>{spfPolicy.server} results in a failure</span>
-			</li>
-		{:else if spfPolicy.policy === 'neutral'}
-			<li class="flex flex-row items-center gap-x-2">
+				<span
+					><span class="font-semibold text-black dark:text-white">{spfPolicy.server}</span> results in
+					a failure</span
+				>
+			{:else if spfPolicy.policy === 'neutral'}
 				<Neutral />
-				<span>{spfPolicy.server} results in a neutral status</span>
-			</li>
-		{:else if spfPolicy.policy === 'softfail'}
-			<li class="flex flex-row items-center gap-x-2">
-				<Bad />
-				<span>{spfPolicy.server} results in a softfail</span>
-			</li>
-		{/if}
+				<span
+					><span class="font-semibold text-black dark:text-white">{spfPolicy.server}</span> results in
+					a neutral status</span
+				>
+			{:else if spfPolicy.policy === 'softfail'}
+				<Bad soft />
+				<span
+					><span class="font-semibold text-black dark:text-white">{spfPolicy.server}</span> results in
+					a softfail</span
+				>
+			{/if}
+
+			{#if spfPolicy.include}
+				<button
+					class="rounded-sm border-1 border-current px-1 py-0.5 text-[0.625rem] text-blue-500 dark:text-blue-400"
+					onclick={() => {
+						store.import_ = spfPolicy.server;
+						import_().catch((error) => {
+							console.error(error);
+						});
+					}}
+				>
+					Include
+				</button>
+			{/if}
+		</li>
 	{/each}
 </ul>
-
-{#if includeState.length > 0}
-	<h3 class="mb-2 font-medium">Included domains</h3>
-	<ul class="flex max-w-prose flex-col gap-y-2 text-sm leading-tight">
-		{#each includeState as spfPolicy}
-			<li class="flex flex-row items-center gap-x-2">
-				<Good />
-				<span>{spfPolicy.server}</span>
-			</li>
-		{/each}
-	</ul>
-{/if}

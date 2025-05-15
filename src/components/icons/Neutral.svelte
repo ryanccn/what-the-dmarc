@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MinusCircleIcon } from 'lucide-svelte';
+	import CircleMinusIcon from 'lucide-svelte/icons/circle-minus';
 </script>
 
-<MinusCircleIcon class="block h-5 w-5 shrink-0 text-neutral-400" />
+<CircleMinusIcon class="block size-5 shrink-0 text-neutral-500" />

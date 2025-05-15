@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CheckCircleIcon } from 'lucide-svelte';
+	import CircleCheckIcon from 'lucide-svelte/icons/circle-check';
 </script>
 
-<CheckCircleIcon class="block h-5 w-5 shrink-0 text-green-500 dark:text-green-400" />
+<CircleCheckIcon class="block size-5 shrink-0 text-green-500 dark:text-green-400" />

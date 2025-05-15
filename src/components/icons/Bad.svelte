@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { XCircleIcon } from 'lucide-svelte';
+	const { soft = false }: { soft?: boolean } = $props();
+	import CircleXIcon from 'lucide-svelte/icons/circle-x';
 </script>
 
-<XCircleIcon class="block h-5 w-5 shrink-0 text-red-500" />
+<CircleXIcon
+	class={`block size-5 shrink-0 ${soft ? 'text-yellow-500 dark:text-yellow-400' : 'text-red-500 dark:text-red-400'}`}
+/>

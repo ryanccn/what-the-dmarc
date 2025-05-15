@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+
+@layer base {
+	body {
+		@apply bg-white text-black dark:bg-black dark:text-neutral-50;
+		color-scheme: dark light;
+		accent-color: var(--color-pink-500);
+	}
+
+	button {
+		@apply not-disabled:hover:cursor-pointer;
+	}
+
+	:focus-visible {
+		@apply focus:outline-2 focus:outline-offset-2 focus:outline-pink-500;
+	}
+
+	* {
+		min-width: 0;
+		min-height: 0;
+	}
+}
