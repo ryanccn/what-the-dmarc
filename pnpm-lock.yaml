@@ -20,7 +20,7 @@ importers:
         version: 3.1.0
       '@ryanccn/eslint-config':
         specifier: ^0.5.1
-        version: 0.5.1(@eslint/eslintrc@3.3.3)(@eslint/js@9.39.2)(eslint-config-prettier@10.1.8(eslint@9.39.2(jiti@2.6.1)))(eslint-plugin-svelte@3.13.1(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1))(eslint-plugin-unicorn@61.0.2(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1)(typescript-eslint@8.52.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(typescript@5.9.3)
+        version: 0.5.1(@eslint/eslintrc@3.3.3)(@eslint/js@9.39.2)(eslint-config-prettier@10.1.8(eslint@9.39.2(jiti@2.6.1)))(eslint-plugin-svelte@3.14.0(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1))(eslint-plugin-unicorn@61.0.2(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1)(typescript-eslint@8.52.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(typescript@5.9.3)
       '@sveltejs/adapter-cloudflare':
         specifier: ^7.2.4
         version: 7.2.4(@sveltejs/kit@2.49.4(@sveltejs/vite-plugin-svelte@6.2.4(svelte@5.46.1)(vite@7.3.0(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.6.0)))(svelte@5.46.1)(typescript@5.9.3)(vite@7.3.0(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.6.0)))(wrangler@4.58.0)
@@ -43,8 +43,8 @@ importers:
         specifier: ^10.1.8
         version: 10.1.8(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-svelte:
-        specifier: ^3.13.1
-        version: 3.13.1(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1)
+        specifier: ^3.14.0
+        version: 3.14.0(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1)
       eslint-plugin-unicorn:
         specifier: ^61.0.2
         version: 61.0.2(eslint@9.39.2(jiti@2.6.1))
@@ -1317,8 +1317,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-plugin-svelte@3.13.1:
-    resolution: {integrity: sha512-Ng+kV/qGS8P/isbNYVE3sJORtubB+yLEcYICMkUWNaDTb0SwZni/JhAYXh/Dz/q2eThUwWY0VMPZ//KYD1n3eQ==}
+  eslint-plugin-svelte@3.14.0:
+    resolution: {integrity: sha512-Isw0GvaMm0yHxAj71edAdGFh28ufYs+6rk2KlbbZphnqZAzrH3Se3t12IFh2H9+1F/jlDhBBL4oiOJmLqmYX0g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.1 || ^9.0.0
@@ -2769,7 +2769,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.54.0':
     optional: true
 
-  '@ryanccn/eslint-config@0.5.1(@eslint/eslintrc@3.3.3)(@eslint/js@9.39.2)(eslint-config-prettier@10.1.8(eslint@9.39.2(jiti@2.6.1)))(eslint-plugin-svelte@3.13.1(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1))(eslint-plugin-unicorn@61.0.2(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1)(typescript-eslint@8.52.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(typescript@5.9.3)':
+  '@ryanccn/eslint-config@0.5.1(@eslint/eslintrc@3.3.3)(@eslint/js@9.39.2)(eslint-config-prettier@10.1.8(eslint@9.39.2(jiti@2.6.1)))(eslint-plugin-svelte@3.14.0(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1))(eslint-plugin-unicorn@61.0.2(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1)(typescript-eslint@8.52.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(typescript@5.9.3)':
     dependencies:
       '@eslint/compat': 1.4.0(eslint@9.39.2(jiti@2.6.1))
       '@typescript-eslint/utils': 8.46.2(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
@@ -2781,7 +2781,7 @@ snapshots:
       '@eslint/eslintrc': 3.3.3
       '@eslint/js': 9.39.2
       eslint-config-prettier: 10.1.8(eslint@9.39.2(jiti@2.6.1))
-      eslint-plugin-svelte: 3.13.1(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1)
+      eslint-plugin-svelte: 3.14.0(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1)
       eslint-plugin-unicorn: 61.0.2(eslint@9.39.2(jiti@2.6.1))
       svelte: 5.46.1
       typescript-eslint: 8.52.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
@@ -3031,7 +3031,7 @@ snapshots:
 
   '@typescript-eslint/utils@8.46.2(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)':
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.0(eslint@9.39.2(jiti@2.6.1))
+      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.2(jiti@2.6.1))
       '@typescript-eslint/scope-manager': 8.46.2
       '@typescript-eslint/types': 8.46.2
       '@typescript-eslint/typescript-estree': 8.46.2(typescript@5.9.3)
@@ -3284,9 +3284,9 @@ snapshots:
     dependencies:
       eslint: 9.39.2(jiti@2.6.1)
 
-  eslint-plugin-svelte@3.13.1(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1):
+  eslint-plugin-svelte@3.14.0(eslint@9.39.2(jiti@2.6.1))(svelte@5.46.1):
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.0(eslint@9.39.2(jiti@2.6.1))
+      '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.2(jiti@2.6.1))
       '@jridgewell/sourcemap-codec': 1.5.5
       eslint: 9.39.2(jiti@2.6.1)
       esutils: 2.0.3
