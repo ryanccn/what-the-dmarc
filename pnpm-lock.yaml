@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       lucide-svelte:
-        specifier: ^0.564.0
-        version: 0.564.0(svelte@5.49.1)
+        specifier: ^0.575.0
+        version: 0.575.0(svelte@5.49.1)
     devDependencies:
       '@eslint/js':
         specifier: ^9.39.2
@@ -1735,8 +1735,8 @@ packages:
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
-  lucide-svelte@0.564.0:
-    resolution: {integrity: sha512-jeubFecyzbeze/Zwu5pFHHrv/u8OtiZ7VesXXus4cAnfRQlmb8TDtiC5gb485z8e4aAqe8FF7I0OVB/TDFAggg==}
+  lucide-svelte@0.575.0:
+    resolution: {integrity: sha512-Tu15tJfbmRNPaU61yeNFf3jfRHs8ABA+NwTt7TWmwVbhlSA3H7sW65tX6RttcP7HGV4aHUlYhXixZOlntoFBdw==}
     peerDependencies:
       svelte: ^3 || ^4 || ^5.0.0-next.42
 
@@ -3721,7 +3721,7 @@ snapshots:
 
   lodash@4.17.21: {}
 
-  lucide-svelte@0.564.0(svelte@5.49.1):
+  lucide-svelte@0.575.0(svelte@5.49.1):
     dependencies:
       svelte: 5.49.1
 
