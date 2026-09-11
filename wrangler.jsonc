@@ -1,14 +1,14 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "what-the-dmarc",
-	"main": "./dist/_worker.js/index.js",
-	"compatibility_date": "2025-05-05",
-	"compatibility_flags": ["nodejs_compat"],
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"compatibility_date": "2026-09-10",
+	"compatibility_flags": ["nodejs_als"],
 	"send_metrics": false,
 	"workers_dev": false,
 	"preview_urls": false,
 	"assets": {
 		"binding": "ASSETS",
-		"directory": "./dist"
+		"directory": ".svelte-kit/cloudflare"
 	}
 }
