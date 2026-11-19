@@ -23,11 +23,11 @@
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
 		"@tailwindcss/vite": "^4.3.5",
 		"autoprefixer": "^10.6.2",
-		"eslint": "^10.14.0",
+		"eslint": "^10.15.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-svelte": "^3.24.1",
 		"eslint-plugin-unicorn": "^74.0.0",
-		"prettier": "^3.9.10",
+		"prettier": "^3.10.1",
 		"prettier-plugin-svelte": "^4.1.1",
 		"prettier-plugin-tailwindcss": "^0.8.1",
 		"svelte": "^5.57.3",
@@ -35,9 +35,9 @@
 		"tailwindcss": "^4.3.5",
 		"tslib": "^2.9.1",
 		"typescript": "^6.0.3",
-		"typescript-eslint": "^8.72.1",
-		"vite": "^8.3.6",
-		"wrangler": "^4.158.0"
+		"typescript-eslint": "^8.72.2",
+		"vite": "^8.3.8",
+		"wrangler": "^4.162.0"
 	},
 	"devEngines": {
 		"runtime": {
